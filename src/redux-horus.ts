@@ -25,7 +25,7 @@ export const hash = curry(<T>(
 ): TReducer<T> => (
     (state: T | undefined, action: TAction): T => {
         const initializedState = (state === undefined)
-            ? typeof initialState === 'function' ? initialState() : initialState
+            ? typeof initialState === 'function' ? (initialState as () => T)() : initialState
             : state
         const defaultCase = () => initializedState
         const cases = reducer(initializedState, action)
