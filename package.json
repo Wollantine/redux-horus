@@ -1,7 +1,7 @@
 {
   "name": "redux-horus",
   "version": "0.0.0",
-  "description": "",
+  "description": "Higher Order Reducers for Redux",
   "keywords": [],
   "main": "dist/redux-horus.umd.js",
   "module": "dist/redux-horus.es5.js",
@@ -9,10 +9,10 @@
   "files": [
     "dist"
   ],
-  "author": "Marc Rodríguez <nebrios2@gmail.com>",
+  "author": "Kwirke <neidt.kwirke@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/kwirke/redux-horus"
   },
   "license": "MIT",
   "engines": {
