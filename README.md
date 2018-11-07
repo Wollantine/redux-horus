@@ -3,7 +3,7 @@ Higher Order Reducers for Redux
 
 ## Example
 ```javascript
-import {hash, whenAction, has}
+import {hash, whenAction, has} from 'redux-horus'
 
 const counter = hash((state, action) => ({
     INCREMENT: () => state + 1,
@@ -16,20 +16,49 @@ const counterReducer = (counterName) => whenAction(has('counterName', counterNam
 
 ## API
 
-### hash
+All the functions are already curried.
 
-### when
+Types:
+```
+export type Dictionary<T> = {[key: string]: T}
 
-### whenAction
+export type Action = {
+    [key: string]: any;
+    type: string;
+}
 
-### whenState
+export type Reducer<T> = (state: T | undefined, action: TAction) => T
+```
 
-### branch
+### `hash(reducer: Reducer<T>, initialState: T | () => T): Reducer<T>`
+Returns a reducer that will return the result of `reducer[action.type](state, action)` if the action.type is among the hash keys, or current state otherwise.
 
-### has(path, value, obj)
+It will use initialState instead of state (or the result of `initialState()` if it is a function) when state is undefined.
 
-### is(type, action)
+### `when(predicate: (state: T, action: Action) => boolean, reducer: Reducer<T>, initialState: T): Reducer<T>`
+Returns a reducer that will act as `reducer` when predicate returns true for current state and action, and as `identity` otherwise.
 
+### `whenAction(predicate: (action: Action) => boolean, reducer: Reducer<T>, initialState: T): Reducer<T>`
+Same as `when`, but only passes action to the predicate.
+
+### `whenState(predicate: (state: T) => boolean, reducer: Reducer<T>, initialState: T): Reducer<T>`
+Same as `when`, but only passes state to the predicate. Useful for functions that have variable arity.
+
+### `branch(predicate: (state: T, action: Action) => boolean, thenReducer: Reducer<T>, elseReducer: Reducer<T>): Reducer<T>`
+Returns a reducer that will act as `thenReducer` when predicate returns true, and as `elseReducer` when predicate returns false.
+
+Both reducers are responsible of handling undefined initial state.
+
+### `has(path: string, value: T, obj: Dictionary<T>)`
+Returns true if the object `obj` has a property equal to `value` in the path described with dot-notation `path`.
+Example:
+```
+has('a.b.c', 3, { a: { b: { c: 3 } } }) // returns true
+has('a.b.c', 3, { a: null }) // returns false
+```
+
+### is(type: string, action: Action)
+Shorthand of `has('type')`, with stricter typing.
 
 ## Motivation
 There is already a good similar library, [astx-redux-util](https://astx-redux-util.js.org/), that offers mostly the same reducers
