@@ -1,3 +1,7 @@
+<p align="center">
+    ![Eye of Horus](./Eye_of_Horus.svg)
+</p>
+
 # Redux Horus
 Higher Order Reducers for Redux
 

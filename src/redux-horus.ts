@@ -52,7 +52,7 @@ export const whenAction = curry(<T>(
     reducer: Reducer<T>,
     initialState: T,
 ): Reducer<T> =>
-    when((action: Action) => condition(action), reducer, initialState)
+    when((_, action: Action) => condition(action), reducer, initialState)
 )
 
 export const whenState = curry(<T>(
@@ -60,7 +60,7 @@ export const whenState = curry(<T>(
     reducer: Reducer<T>,
     initialState: T,
 ): Reducer<T> =>
-    when(({state}: {state: T}) => condition(state), reducer, initialState)
+    when((state: T) => condition(state), reducer, initialState)
 )
 
 export const branch = curry(<T>(
