@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/kwirke/redux-horus/master/Eye_of_Horus.svg"/>
+    <img src="./Eye_of_Horus.svg" width="200">
 </p>
 
 # Redux Horus
