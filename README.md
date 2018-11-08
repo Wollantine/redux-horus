@@ -37,7 +37,7 @@ const counterReducer = (counterName) => whenAction(has('counterName', counterNam
 All the functions are already curried.
 
 Types:
-```
+```javascript
 export type Dictionary<T> = {[key: string]: T}
 
 export type Action = {
@@ -49,36 +49,71 @@ export type Reducer<T> = (state: T | undefined, action: TAction) => T
 ```
 
 - ### hash(reducer, initialState)
-`hash(reducer: Reducer<T>, initialState: T | () => T): Reducer<T>`
+```
+hash(
+    reducer: Reducer<T>,
+    initialState: T | () => T
+): Reducer<T>
+```
 
 Returns a reducer that will return the result of `reducer[action.type](state, action)` if the action.type is among the hash keys, or current state otherwise.
 
 It will use initialState instead of state (or the result of `initialState()` if it is a function) when state is undefined.
 
 - ### when(predicate, reducer, initialState)
-`when(predicate: (state: T, action: Action) => boolean, reducer: Reducer<T>, initialState: T): Reducer<T>`
+```
+when(
+    predicate: (state: T, action: Action) => boolean,
+    reducer: Reducer<T>,
+    initialState: T
+): Reducer<T>
+```
 
 Returns a reducer that will act as `reducer` when predicate returns true for current state and action, and as `identity` otherwise.
 
 - ### whenAction(predicate, reducer, initialState)
-`whenAction(predicate: (action: Action) => boolean, reducer: Reducer<T>, initialState: T): Reducer<T>`
+```
+whenAction(
+    predicate: (action: Action) => boolean,
+    reducer: Reducer<T>,
+    initialState: T
+): Reducer<T>
+```
 
 Same as `when`, but only passes action to the predicate.
 
 - ### whenState(predicate, reducer, initialState)
-`whenState(predicate: (state: T) => boolean, reducer: Reducer<T>, initialState: T): Reducer<T>`
+```
+whenState(
+    predicate: (state: T) => boolean,
+    reducer: Reducer<T>,
+    initialState: T
+): Reducer<T>
+```
 
 Same as `when`, but only passes state to the predicate. Useful for functions that have variable arity.
 
 - ### branch(predicate, thenReducer, elseReducer)
-`branch(predicate: (state: T, action: Action) => boolean, thenReducer: Reducer<T>, elseReducer: Reducer<T>): Reducer<T>`
+```
+branch(
+    predicate: (state: T, action: Action) => boolean,
+    thenReducer: Reducer<T>,
+    elseReducer: Reducer<T>
+): Reducer<T>
+```
 
 Returns a reducer that will act as `thenReducer` when predicate returns true, and as `elseReducer` when predicate returns false.
 
 Both reducers are responsible of handling undefined initial state.
 
 - ### has(path, value, obj)
-`has(path: string, value: T, obj: Dictionary<T>)`
+```
+has(
+    path: string,
+    value: T,
+    obj: Dictionary<T>
+)
+```
 
 Returns true if the object `obj` has a property equal to `value` in the path described with dot-notation `path`.
 Example:
@@ -88,7 +123,12 @@ has('a.b.c', 3, { a: null }) // returns false
 ```
 
 - ### is(type, action)
-`is(type: string, action: Action)`
+```
+is(
+    type: string,
+    action: Action
+)
+```
 
 Shorthand of `has('type')`, with stricter typing.
 
