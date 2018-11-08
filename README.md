@@ -1,5 +1,5 @@
 <p align="center">
-    ![Eye of Horus](./Eye_of_Horus.svg)
+    <img src="https://raw.githubusercontent.com/kwirke/redux-horus/master/Eye_of_Horus.svg"/>
 </p>
 
 # Redux Horus
