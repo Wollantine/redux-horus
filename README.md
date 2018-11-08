@@ -2,20 +2,38 @@
 Higher Order Reducers for Redux
 
 ## Example
+Instead of this:
+```javascript
+const counterReducer = (counterName) => (state = 0, action) => {
+    switch (action.type) {
+        case 'INCREMENT':
+            return (action.counterName === counterName)
+                ? state + 1
+                : state
+        case 'DECREMENT':
+            return (action.counterName === counterName)
+                ? state - 1
+                : state
+        default:
+            return state
+    }
+}
+```
+
+Do this:
 ```javascript
 import {hash, whenAction, has} from 'redux-horus'
 
 const counter = hash((state, action) => ({
     INCREMENT: () => state + 1,
     DECREMENT: () => state - 1,
-}))
+}), 0)
 
-const counterReducer = (counterName) => whenAction(has('counterName', counterName), counter)
+const counterReducer = (counterName) => whenAction(has('counterName', counterName), counter, 0)
 ```
 
 
 ## API
-
 All the functions are already curried.
 
 Types:
@@ -110,5 +128,9 @@ conditionalReducer((state, action) => action.type === TYPE, reducer)
 // redux-horus
 whenAction(action => action.type === TYPE, reducer)
 ```
+- Redux Horus has no `joinReducers`
 - Redux Horus exposes some silly but always needed functional helpers.
 - Redux Horus functions are all curried.
+
+## Thanks
+Thanks to @alexjoverm for his [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter).
