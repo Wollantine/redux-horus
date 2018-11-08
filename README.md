@@ -5,15 +5,16 @@ Higher Order Reducers for Redux
 Instead of this:
 ```javascript
 const counterReducer = (counterName) => (state = 0, action) => {
+    if (action.counterName !== counterName) {
+        return state
+    }
     switch (action.type) {
         case 'INCREMENT':
-            return (action.counterName === counterName)
-                ? state + 1
-                : state
+            return state + 1
         case 'DECREMENT':
-            return (action.counterName === counterName)
-                ? state - 1
-                : state
+            return state - 1
+        case 'RESET':
+            return 0
         default:
             return state
     }
@@ -27,6 +28,7 @@ import {hash, whenAction, has} from 'redux-horus'
 const counter = hash((state, action) => ({
     INCREMENT: () => state + 1,
     DECREMENT: () => state - 1,
+    RESET: () => 0
 }), 0)
 
 const counterReducer = (counterName) => whenAction(has('counterName', counterName), counter, 0)
@@ -65,7 +67,7 @@ It will use initialState instead of state (or the result of `initialState()` if 
 when(
     predicate: (state: T, action: Action) => boolean,
     reducer: Reducer<T>,
-    initialState: T
+    initialState: T | () => T
 ): Reducer<T>
 ```
 
@@ -76,7 +78,7 @@ Returns a reducer that will act as `reducer` when predicate returns true for cur
 whenAction(
     predicate: (action: Action) => boolean,
     reducer: Reducer<T>,
-    initialState: T
+    initialState: T | () => T
 ): Reducer<T>
 ```
 
@@ -87,7 +89,7 @@ Same as `when`, but only passes action to the predicate.
 whenState(
     predicate: (state: T) => boolean,
     reducer: Reducer<T>,
-    initialState: T
+    initialState: T | () => T
 ): Reducer<T>
 ```
 
@@ -167,6 +169,9 @@ conditionalReducer((state, action) => action.type === TYPE, reducer)
 
 // redux-horus
 whenAction(action => action.type === TYPE, reducer)
+
+// redux-horus, with 'is'
+whenAction(is(TYPE), reducer)
 ```
 - Redux Horus has no `joinReducers`
 - Redux Horus exposes some silly but always needed functional helpers.

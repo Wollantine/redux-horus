@@ -37,12 +37,15 @@ export const hash = curry(<T>(
 export const when = curry(<T>(
     condition: (state: T, action: Action) => boolean,
     reducer: Reducer<T>,
-    initialState: T,
-): Reducer<T> => (state: T = initialState, action: Action): T => (
-    condition(state, action)
-        ? reducer(state, action)
-        : state
-))
+    initialState: T | (() => T),
+): Reducer<T> => (state: T | undefined, action: Action): T => {
+    const initializedState: T = (state === undefined)
+            ? typeof initialState === 'function' ? (initialState as () => T)() : initialState
+            : state
+    return condition(initializedState, action)
+        ? reducer(initializedState, action)
+        : initializedState
+})
 
 export const whenAction = curry(<T>(
     condition: (action: Action) => boolean,
