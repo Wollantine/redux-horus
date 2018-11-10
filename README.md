@@ -38,26 +38,30 @@ const counter = hash((state, action) => ({
 const counterReducer = (counterName) => whenAction(has('counterName', counterName), counter, 0)
 ```
 
+## Install
+```
+npm install redux-horus
+```
 
 ## API
 All the functions are already curried.
 
 Types:
 ```javascript
-export type Dictionary<T> = {[key: string]: T}
+type Dictionary<T> = {[key: string]: T}
 
-export type Action = {
+type Action = {
     [key: string]: any;
     type: string;
 }
 
-export type Reducer<T> = (state: T | undefined, action: TAction) => T
+type Reducer<T> = (state: T | undefined, action: TAction) => T
 ```
 
 - ### hash(reducer, initialState)
 ```
 hash(
-    reducer: Reducer<T>,
+    reducer: (state: T, action: TAction) => Dictionary<(state?: T, action?: Action) => T>,
     initialState: T | () => T
 ): Reducer<T>
 ```

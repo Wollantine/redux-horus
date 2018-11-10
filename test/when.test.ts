@@ -9,6 +9,12 @@ export const whenTests = whenFn => () => {
         expect(actual).toBe(expected)
     })
 
+    it('should call initialState when it is a function', () => {
+        const actual = whenFn(() => false, x => x, () => 42)(undefined, startAction)
+        const expected = 42
+        expect(actual).toBe(expected)
+    })
+
     it('should pass initialized state when condition succeeds', () => {
         const actual = whenFn(() => true, x => x, 0)(undefined, startAction)
         const expected = 0
