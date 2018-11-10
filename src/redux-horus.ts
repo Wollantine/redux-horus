@@ -20,15 +20,15 @@ const pathEq = (path: string[], value: any, obj: any): boolean => (
     )
 
 export const hash = curry(<T>(
-    reducer: (state: T, action: Action) => Dictionary<(state?: T, action?: Action) => T>,
-    initialState: T | (() => T)
+    reducerHash: (state: T, action: Action) => Dictionary<(state?: T, action?: Action) => T>,
+    initialState: T,
 ): Reducer<T> => (
     (state: T | undefined, action: Action): T => {
         const initializedState = (state === undefined)
-            ? typeof initialState === 'function' ? (initialState as () => T)() : initialState
+            ? initialState
             : state
         const defaultCase = () => initializedState
-        const cases = reducer(initializedState, action)
+        const cases = reducerHash(initializedState, action)
         const matchedCase: (state?: T, action?: Action) => T = propOr(defaultCase, action.type, cases)
         return matchedCase(state, action)
     }
@@ -37,10 +37,10 @@ export const hash = curry(<T>(
 export const when = curry(<T>(
     condition: (state: T, action: Action) => boolean,
     reducer: Reducer<T>,
-    initialState: T | (() => T),
+    initialState: T,
 ): Reducer<T> => (state: T | undefined, action: Action): T => {
     const initializedState: T = (state === undefined)
-            ? typeof initialState === 'function' ? (initialState as () => T)() : initialState
+            ? initialState
             : state
     return condition(initializedState, action)
         ? reducer(initializedState, action)

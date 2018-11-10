@@ -5,6 +5,11 @@
 # Redux Horus
 Higher Order Reducers for Redux
 
+## Install
+```
+npm install redux-horus
+```
+
 ## Example
 Instead of this:
 ```javascript
@@ -38,11 +43,6 @@ const counter = hash((state, action) => ({
 const counterReducer = (counterName) => whenAction(has('counterName', counterName), counter, 0)
 ```
 
-## Install
-```
-npm install redux-horus
-```
-
 ## API
 All the functions are already curried.
 
@@ -62,20 +62,20 @@ type Reducer<T> = (state: T | undefined, action: TAction) => T
 ```
 hash(
     reducer: (state: T, action: TAction) => Dictionary<(state?: T, action?: Action) => T>,
-    initialState: T | () => T
+    initialState: T
 ): Reducer<T>
 ```
 
 Returns a reducer that will return the result of `reducer[action.type](state, action)` if the action.type is among the hash keys, or current state otherwise.
 
-It will use initialState instead of state (or the result of `initialState()` if it is a function) when state is undefined.
+It will use initialState instead of state when state is undefined.
 
 - ### when(predicate, reducer, initialState)
 ```
 when(
     predicate: (state: T, action: Action) => boolean,
     reducer: Reducer<T>,
-    initialState: T | () => T
+    initialState: T
 ): Reducer<T>
 ```
 
@@ -86,7 +86,7 @@ Returns a reducer that will act as `reducer` when predicate returns true for cur
 whenAction(
     predicate: (action: Action) => boolean,
     reducer: Reducer<T>,
-    initialState: T | () => T
+    initialState: T
 ): Reducer<T>
 ```
 
@@ -97,7 +97,7 @@ Same as `when`, but only passes action to the predicate.
 whenState(
     predicate: (state: T) => boolean,
     reducer: Reducer<T>,
-    initialState: T | () => T
+    initialState: T
 ): Reducer<T>
 ```
 
