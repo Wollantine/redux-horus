@@ -1,5 +1,5 @@
 <p align="center">
-    ![Eye of Horus](./Eye_of_Horus.svg)
+    <img src="./Eye_of_Horus.svg" width="200">
 </p>
 
 # Redux Horus
