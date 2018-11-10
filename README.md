@@ -2,6 +2,9 @@
     <img src="./Eye_of_Horus.svg" width="200">
 </p>
 
+[![Build Status](https://travis-ci.org/kwirke/redux-horus.svg?branch=master)](https://travis-ci.org/kwirke/redux-horus)
+[![Coverage Status](https://coveralls.io/repos/github/kwirke/redux-horus/badge.svg?branch=master)](https://coveralls.io/github/kwirke/redux-horus?branch=master)
+
 # Redux Horus
 Higher Order Reducers for Redux
 

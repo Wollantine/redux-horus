@@ -1,6 +1,6 @@
 {
   "name": "redux-horus",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Higher Order Reducers for Redux",
   "keywords": [],
   "main": "dist/redux-horus.umd.js",
